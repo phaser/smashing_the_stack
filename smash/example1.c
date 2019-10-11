@@ -5,7 +5,7 @@ void function (int a, int b, int c) {
     char buffer1[5];
     int *ret;
 
-    ret = buffer1 + 17;
+    ret = (int*)(buffer1 + 32);
     (*ret) += 7;
 }
 
