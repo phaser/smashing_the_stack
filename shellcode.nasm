@@ -2,11 +2,12 @@ section .text
 global _start
 
 _start:
+  jmp $+23
+  pop rsi
   mov rax, 59
-  mov rdi, file  ; *filename
+  mov rdi, rsi   ; *filename
   mov rsi, 0     ; *argv
   mov rdx, 0     ; *envp
   syscall
-
-section .data
+  call $-21
   file db "/bin/sh",0

