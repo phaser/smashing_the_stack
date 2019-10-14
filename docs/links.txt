@@ -1,1 +1,2 @@
 https://blog.techorganic.com/2015/04/10/64-bit-linux-stack-smashing-tutorial-part-1/
+https://systemoverlord.com/2014/06/05/minimal-x86-64-shellcode-for-binsh/
