@@ -3,8 +3,6 @@ project (smash)
 
 enable_language( C CXX ASM_NASM )
 set (CMAKE_ASM_NASM_LINK_EXECUTABLE "ld <FLAGS> <CMAKE_ASM_NASM_LINK_FLAGS> <LINK_FLAGS> <OBJECTS>  -o <TARGET> <LINK_LIBRARIES>")
-#set (CMAKE_ASM_NASM_LINK_FLAGS "-f elf64")
-#set (CMAKE_ASM_NASM_COMPILE_OBJECT "nasm -f elf64 <SOURCES> -o <OBJECT>")
 
 # example 1
 set (SOURCES ${CMAKE_CURRENT_SOURCE_DIR}/smash/example1.c)
@@ -23,6 +21,13 @@ target_compile_options(${PROJECT} PRIVATE -fno-stack-protector -z execstack -g -
 # example 3
 set (SOURCES ${CMAKE_CURRENT_SOURCE_DIR}/smash/example3.c)
 set (PROJECT example3)
+add_executable (${PROJECT} ${SOURCES})
+target_compile_definitions(${PROJECT} PRIVATE -D_FORTIFY_SOURCE=0)
+target_compile_options(${PROJECT} PRIVATE -fno-stack-protector -z execstack -g -ggdb3)
+
+# vulnerable
+set (SOURCES ${CMAKE_CURRENT_SOURCE_DIR}/smash/vulnerable.c)
+set (PROJECT vulnerable)
 add_executable (${PROJECT} ${SOURCES})
 target_compile_definitions(${PROJECT} PRIVATE -D_FORTIFY_SOURCE=0)
 target_compile_options(${PROJECT} PRIVATE -fno-stack-protector -z execstack -g -ggdb3)
