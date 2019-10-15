@@ -32,6 +32,13 @@ add_executable (${PROJECT} ${SOURCES})
 target_compile_definitions(${PROJECT} PRIVATE -D_FORTIFY_SOURCE=0)
 target_compile_options(${PROJECT} PRIVATE -fno-stack-protector -z execstack -g -ggdb3)
 
+# vulnerable
+set (SOURCES ${CMAKE_CURRENT_SOURCE_DIR}/smash/exploit.c)
+set (PROJECT exploit)
+add_executable (${PROJECT} ${SOURCES})
+target_compile_definitions(${PROJECT} PRIVATE -D_FORTIFY_SOURCE=0)
+target_compile_options(${PROJECT} PRIVATE -fno-stack-protector -z execstack -g -ggdb3)
+
 # shellcode.nasm
 set (SOURCES ${CMAKE_CURRENT_SOURCE_DIR}/smash/shellcode.nasm)
 set (PROJECT shellcode)
