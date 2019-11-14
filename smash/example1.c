@@ -5,6 +5,11 @@
 void function (int a, int b, int c) {
     char buffer1[5];
     uint64_t *ret;
+    
+    for  (a = 0; a < 40; a++) {
+    	ret = (uint64_t*)(buffer1 + a);
+    	(*ret) = 0xABCDEF00; 
+    }
 
     // modify the return address to skip x - 1 at line 20
     // so printf will print 0

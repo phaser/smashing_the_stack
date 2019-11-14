@@ -25,6 +25,14 @@ add_executable (${PROJECT} ${SOURCES})
 target_compile_definitions(${PROJECT} PRIVATE -D_FORTIFY_SOURCE=0)
 target_compile_options(${PROJECT} PRIVATE -fno-stack-protector -z execstack -g -ggdb3)
 
+# execve_example
+set (SOURCES ${CMAKE_CURRENT_SOURCE_DIR}/smash/execve_example.c)
+set (PROJECT execve_example)
+add_executable (${PROJECT} ${SOURCES})
+target_compile_definitions (${PROJECT} PRIVATE -D_FORTIFY_SOURCE=0)
+target_compile_options(${PROJECT} PRIVATE -fno-stack-protector -z execstack -g -ggdb3 -static)
+target_link_options(${PROJECT} PRIVATE -static)
+
 # vulnerable
 set (SOURCES ${CMAKE_CURRENT_SOURCE_DIR}/smash/vulnerable.c)
 set (PROJECT vulnerable)
