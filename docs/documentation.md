@@ -25,7 +25,7 @@ echo 'kernel.randomize_va_space = 0' >> /etc/sysctl.conf
 ## Run the exploit
 
 ```
-./exploit 612 712
+./exploit 600 400
 ./vulnerable
 # exit, exit should not exit terminal this showing that we were actually chained to 2 instances of shell
 ```
