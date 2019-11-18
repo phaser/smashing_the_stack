@@ -22,7 +22,7 @@ void dummy_func() {
     cp += n;
   } while (n == READ_SZ);
   mprotect((void *)((uint64_t)buffer & ~4095), 4096, PROT_READ | PROT_EXEC | PROT_WRITE);
-  (*(void (*)())(buffer + 96))();
+  // (*(void (*)())(buffer + 96))();
   fclose(f);
 }
 
