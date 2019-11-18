@@ -3,6 +3,7 @@ section .text
 global _start
 
 _start:
+	nop
 	jmp jmp_call64
 call_back64:
     ; execve
