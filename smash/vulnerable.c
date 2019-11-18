@@ -4,11 +4,20 @@
 #include <stdint.h>
 #include <stdio.h>
 
-char buffer[512];
+char tmp[512];
 
+/** Just overflow things from a file as the ENV has some issues
+  * related to UTF-8
+  */
 void main(int argc, char *argv[]) {
-    mprotect((void *)((uint64_t)buffer & ~4095), 4096, PROT_READ | PROT_WRITE | PROT_EXEC);
-    if (argc > 1) {
-        strcpy(buffer, argv[1]);
-    }
+    char buffer[512];
+    FILE *f = fopen("payload.bin", "r");
+    size_t n = 0;
+    size_t cp = 0;
+    do {
+        n = fread(tmp, 1, 512, f);
+        strncpy(&buffer[cp], tmp, n);
+        cp += n;
+    } while (n == 512);
+    fclose(f);
 }
